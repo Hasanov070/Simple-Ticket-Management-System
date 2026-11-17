@@ -6,6 +6,8 @@ import az.example.tickets.enums.TicketStatus;
 import java.time.LocalDateTime;
 
 public final class Ticket {
+
+
     private final Long id; // Biletin IDsi
     /*Sual yarana bilerki neye gore (private final) istifade eledik chunki
     Mentiqe esasen bilete ID verildikden sonra deyishmemek lazimdir. Private final bunu edir.*/
@@ -20,10 +22,23 @@ public final class Ticket {
     private final LocalDateTime createdAt; // LocalDateTime java-da tarix ve saati saxlamaq uhcun
     // Istifade olunur. Burdada eyni qayda ile ticketin zamani yaradildiqdan sonra onu deyishmek olmaz
 
-//private olmasi sayesinde bashqa classlar bu fieldleri bir basha deyishe bilmez
+    //private olmasi sayesinde bashqa classlar bu fieldleri bir basha deyishe bilmez
 
     // Burada Null exceptionlari qeyd edirik ki bosh qalmasinlar null value olanda error vere bilsin
+
+
+// Constructor
+
     public Ticket(Long id, String title, String description, TicketPriority ticketPriority){
+        this.id = id; // istifadechi terefinden melumat verilir
+        this.title = title; // istifadechi terefinden melumat verilir
+        this.description = description; // istifadechi terefinden melumat verilir
+        this.ticketPriority = ticketPriority; // istifadechi terefinden melumat verilir
+        this.ticketStatus = TicketStatus.OPEN; //Sistem terefinden ilkin melhelede (OPEN) kimi verilir sonradan deyishilecek
+        this.createdAt = LocalDateTime.now();
+
+
+
         if (id == null) {
             throw new IllegalArgumentException("Ticket id must not be null");
         }
@@ -33,12 +48,7 @@ public final class Ticket {
         if (ticketPriority == null) {
             throw new IllegalArgumentException("Ticket priority must not be null");
         }
-    this.id = id;
-    this.title = title;
-    this.description = description;
-    this.ticketPriority = ticketPriority;
-    this.ticketStatus = TicketStatus.OPEN;
-    this.createdAt = LocalDateTime.now();
+
 
 
     }
