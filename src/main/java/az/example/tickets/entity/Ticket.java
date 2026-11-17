@@ -6,13 +6,21 @@ import az.example.tickets.enums.TicketStatus;
 import java.time.LocalDateTime;
 
 public final class Ticket {
-    private final Long id;
-    private String title;
-    private String description;
-    private TicketStatus ticketStatus;
-    private TicketPriority ticketPriority;
-    private final LocalDateTime createdAt;
+    private final Long id; // Biletin IDsi
+    /*Sual yarana bilerki neye gore (private final) istifade eledik chunki
+    Mentiqe esasen bilete ID verildikden sonra deyishmemek lazimdir. Private final bunu edir.*/
+    private String title; // Biletin bashligi
 
+    private String description; // Bilet haqqda melumat
+
+    private TicketStatus ticketStatus; // Biletin Statusu
+
+    private TicketPriority ticketPriority; //Biletin vacibliyi
+
+    private final LocalDateTime createdAt; // LocalDateTime java-da tarix ve saati saxlamaq uhcun
+    // Istifade olunur. Burdada eyni qayda ile ticketin zamani yaradildiqdan sonra onu deyishmek olmaz
+
+//private olmasi sayesinde bashqa classlar bu fieldleri bir basha deyishe bilmez
 
     // Burada Null exceptionlari qeyd edirik ki bosh qalmasinlar null value olanda error vere bilsin
     public Ticket(Long id, String title, String description, TicketPriority ticketPriority){
