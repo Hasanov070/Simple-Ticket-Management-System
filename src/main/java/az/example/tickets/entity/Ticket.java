@@ -24,10 +24,10 @@ public final class Ticket {
 
     //private olmasi sayesinde bashqa classlar bu fieldleri bir basha deyishe bilmez
 
-    // Burada Null exceptionlari qeyd edirik ki bosh qalmasinlar null value olanda error vere bilsin
 
 
-// Constructor
+// Constructor, men burda bele bir yanlishiq eledim ki constructor ichine bir method yazmishdim. Bunu etmek olmaz
+    // Biz oyrenmishdikki constructor yeni obyekt yaradilarken onun ilkin melumatlarini teyin edir.
 
     public Ticket(Long id, String title, String description, TicketPriority ticketPriority){
         this.id = id; // istifadechi terefinden melumat verilir
@@ -38,6 +38,7 @@ public final class Ticket {
         this.createdAt = LocalDateTime.now();
 
 
+        // Burada Null exceptionlari qeyd edirik ki bosh qalmasinlar null value olanda error vere bilsin
 
         if (id == null) {
             throw new IllegalArgumentException("Ticket id must not be null");
@@ -50,6 +51,52 @@ public final class Ticket {
         }
 
 
+// Burada adindan da gorunduyu kimi ticketin ilkin OPEN olan adini process e gore deyishmek metodun yaziriq
+        // burada bir exception yazib deyirkki ticketin valuesi null ola bilmez
+        /* Bele bir sual yarana bilerki bes biz getter ve setter oyrenmishik onun yerine setter de istifade ede bilerdik. Niye istifade elemirik?
+        Mesele orasindadirki, kodu oxuyan adam uchun ve gelecekde lazimi deyishikler etmek uchun changeTicketStatus methodun yazmishiqki hem diger
+        developer uchun oxuyan zaman rahat olsun rahat anlaya bilsin hemde metoda elave deyishikler ede bilerik. Sadece bir funksiya uchun xidmet edir*/
 
+        }
+
+    // Yuxarida behs olunan hemin method, indi tam duzgun yerindedir.
+    // Bu methodun esas ishi yaranmish ticketin statusunu deyishdirmekdir.
+    public void changeTicketStatus(TicketStatus newStatus) {
+        if (newStatus == null) {
+            throw new IllegalArgumentException(
+                    "Ticket status cannot be null"
+            );
+        }
+        this.ticketStatus = newStatus;
     }
+
+
+
+        //Burada getter metodundan istifade ederek private valuelarimizi oxuya bilceyik
+        public Long getId() { return id; } // Ticketin IDsin qaytarir
+        public String getTitle() { return title; } // Ticketin adin qaytarir
+        public String getDescription() { return description; } // Ticketin haqqda yazilmish melumatlari qaytarir
+        public TicketStatus getStatus() { return ticketStatus; } //Ticketin hazirki statusunu qaytarir
+        public TicketPriority getPriority() { return ticketPriority; } // Ticketin prioritetini qaytarir
+        public LocalDateTime getCreatedAt() { return createdAt; }   // Ticketin hansi saatda ve tarixde yarandigini qaytarir
+
+        /* Sual yarana bilerki biz neye gore return istifade edirik, bunun yerine sout da yaza bilerdik ki bize value ni versin.
+        * Amma bele bir mesele varki biz biletin IDsi ile yoxlanishlar edeceyik ona gore return qaytarmalidi ki biz hemin value ile test ede bilek*/
+
+
+
+// Burda esas meqsedimiz String librarysinden istifade etdiyimiz valuelari bize oxuna bileceyimiz shekilde geri qaytarmasini istyeirik.
+    @Override
+                public String toString(){
+            return "Ticket{id = " + id
+                    + ", title = '" + title + '\''
+                    + ", status = " + ticketStatus
+                    + ", priority = " + ticketPriority
+                    + ", createdAt = " + createdAt
+                    + '}';
+        }
+
+
 }
+
+

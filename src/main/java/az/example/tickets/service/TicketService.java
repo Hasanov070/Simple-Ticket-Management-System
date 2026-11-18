@@ -33,7 +33,7 @@ public class TicketService {
 
 // Biz yeni ticket yaradanda esas meqsedimiz yaranan ticketin idsinin sistemde olub olmadigini yoxlamaqdirki,
     // bu sebebden customer exception vermishik ki, bunu anlaya bilsin.
-    public createTicket(
+    public Ticket createTicket(
             Long id,
             String title,
             String description,
@@ -60,6 +60,8 @@ public class TicketService {
         * Hemin momement bize error qaytayacaqdi. Chunki metodun evvelinde ticket yazmishiq sonra hechne yazmamishiq
         * Java bizden sonda nese gozleyir gondermekle bagli. Elave de demek olarki gozlmemesi uchun void yaza bilerik.
         * Dogrudu elemek olar. Ama ele oldugu halda void bize obyektin ozun qaytarmir. Buda bizim ishimizi uzadir.*/
+
+
      return ticket;
     }
 
