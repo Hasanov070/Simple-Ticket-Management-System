@@ -64,6 +64,15 @@ public class TicketService {
 
      return ticket;
     }
+// GetAllTickets funksiyasi.Oyrenildiyi qeder biz goruruk ki, elimizde 3 cur listing funksiyasi var
+    /* Bunlar ArrayList, LinkedList ve Hashsetdir. LinkedHashMapping istifade eledik ki, ticketlerimizi saxlasin
+    Amma getAllTicket funksiyasin biz ishledende goruruk ki bize sira uygunlugu lazimdi. Bu sebebden bize en uygun arraylist
+    olacaqdir. Linkedlist de esas ustunluk qonshulari ile elaqede oldugu uchun yeni bir data (node) elave etdiyi hallda
+    O(1) derecede ustunluk verir. Sadece bize butun listi gostermek lazim gelende ise sadece ArrayList kifayet edecekdir.
+    */
+    public List<Ticket> getAllTickets(){
+        return new ArrayList<>(tickets.values());
+    }
 
 
 
