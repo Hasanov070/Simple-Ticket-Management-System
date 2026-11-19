@@ -87,7 +87,6 @@ public class TicketService {
     }
 
     // getTicketByStatus funksiyasi
-    //
 
     public  List<Ticket> getTicketByStatus(TicketStatus ticketStatus){
 
