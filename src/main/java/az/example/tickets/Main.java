@@ -40,20 +40,11 @@ public class Main {
         );
 
 
-        ticket3.changeTicketStatus(TicketStatus.CLOSED);
+        ticketService.changeTicketStatus(101L, TicketStatus.IN_PROGRESS);
 
-        ticket2.changeTicketStatus(TicketStatus.IN_PROGRESS);
+        System.out.println(ticket1);
 
-        List<Ticket> openTickets = ticketService.getTicketByStatus(TicketStatus.OPEN);
 
-        List<Ticket> closedTickets = ticketService.getTicketByStatus(TicketStatus.CLOSED);
-
-        System.out.println("OPEN statuslu biletler:");
-
-        for (int i = 0; i < openTickets.size(); i++) {
-            Ticket ticket = openTickets.get(i);
-            System.out.println(ticket);
-        }
 
 
 

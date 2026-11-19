@@ -119,6 +119,39 @@ public class TicketService {
     }
 
 
+    // getHighPriorityTickets
+    // Burda da eyni qayda da oldugu kimi yeni array yaradib ozun uzerinde ishleyirk. Yeni parametr
+    // Olaraq result yazib neticeni resultla qeyd edirik
+
+    public List<Ticket> getHighPriorityTickets(){
+
+        List<Ticket> allTickets = new ArrayList<>(tickets.values());
+
+        List<Ticket> result = new ArrayList<>();
+
+        for (int i = 0; i < allTickets.size(); i++){
+
+            Ticket ticket = allTickets.get(i);
+
+            if(ticket.getPriority() == TicketPriority.HIGH){
+                result.add(ticket);
+            }
+        }
+
+        return result;
+    }
+
+    /*Burada sual yarana bilerki diger methodlarda biz void istifade elemedik amma burda ishledirik
+    * sebeb nedir? Sebeb ondan ibaretdirki void olmayanda biz valueni saxlaya bilirik. Indi burda saxlamaq
+    * lazim deil sadece statusun deyishirik. Buna gorede bize void lazimdir. Biz voidsiz de yaza bilerdik uygundurda
+    * sadece geriye bize nese qaytarmali idi business logicde bizden ele bir shey teleb olunmadigindan biz bele edirik.*/
+    public void changeTicketStatus(Long id, TicketStatus newticketStatus){
+
+        Ticket ticket = getTicketById(id);
+        ticket.changeTicketStatus(newticketStatus);
+
+    }
+
 
 
 }
