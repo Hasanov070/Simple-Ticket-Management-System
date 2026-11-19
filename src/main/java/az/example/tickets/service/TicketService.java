@@ -74,6 +74,52 @@ public class TicketService {
         return new ArrayList<>(tickets.values());
     }
 
+    public Ticket getTicketById(Long id){
+
+        Ticket ticket = tickets.get(id);
+
+        if (ticket == null){
+
+            throw new TicketNotFoundException(id);
+        }
+
+        return ticket;
+    }
+
+    // getTicketByStatus funksiyasi
+    //
+
+    public  List<Ticket> getTicketByStatus(TicketStatus ticketStatus){
+
+/*Biz oyrendiyimiz kimi goruruk ki, biz melumatlari mapde 0, 1, 2 kimi indekslere goture bilmerik. Chunki
+* LinkedHashMapda key ve value kimi saxlanaliyir deye bize bashqa bir usul lazimdir. Bu sebebden biz yeni
+* ArrayList yaradiriqki getter methodu istifade ederek valuelari oxuya bilek bundan elave olaraqda siralaya bilek
+* */
+        if(ticketStatus == null){
+
+            throw new IllegalArgumentException("Status boş ola bilməz!");
+
+        }
+
+        List<Ticket> allTickets = new ArrayList<>(tickets.values());
+
+        List<Ticket> result = new ArrayList<>();
+
+        for (int i = 0; i < allTickets.size(); i++){
+
+            // Ashagida verilen kodda gore bilirik ki, Ticket deyishenin data type i ticket deyishenin adi
+            //allTickets.get(i) hemin indeksi elementi qaytarir
+
+            Ticket ticket = allTickets.get(i);
+
+            if(ticket.getStatus() == ticketStatus){
+                result.add(ticket);
+            }
+        }
+        return result;
+    }
+
+
 
 
 }
