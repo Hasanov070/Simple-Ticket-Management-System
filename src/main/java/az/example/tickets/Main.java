@@ -13,8 +13,6 @@ public class Main {
 
         // Create scanner and TicketService object
 
-        Scanner scanner = new Scanner(System.in);
-
         TicketService ticketService = new TicketService();
 
         // Step 2: Create three tickets
@@ -40,9 +38,10 @@ public class Main {
         );
 
 
-        ticketService.changeTicketStatus(101L, TicketStatus.IN_PROGRESS);
+        System.out.println(ticketService.getAllTickets());
 
-        System.out.println(ticket1);
+        ticketService.deleteTicket(103L);
+        System.out.println(ticketService.getAllTickets());
 
 
 

@@ -151,7 +151,14 @@ public class TicketService {
         ticket.changeTicketStatus(newticketStatus);
 
     }
+// Evvelki methoddan oyrenidyimiz kimi eyni mentiqle istifade edeceyik, changeStatus eledikde void istifade etmishdik
+    // bize geri nese qaytarmagin istemirdik. Burda da biz sadece delete ediirik ticketi geri value qaytarmamaldi.
+    public void deleteTicket(Long id){
 
+        getTicketById(id);
+
+        tickets.remove(id);
+    }
 
 
 }
