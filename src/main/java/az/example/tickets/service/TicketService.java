@@ -90,29 +90,36 @@ public class TicketService {
     }
 
     // getTicketByStatus funksiyasi
-
     public  List<Ticket> getTicketByStatus(TicketStatus ticketStatus){
 
-/*Biz oyrendiyimiz kimi goruruk ki, biz melumatlari mapde 0, 1, 2 kimi indekslere goture bilmerik. Chunki
-* LinkedHashMapda key ve value kimi saxlanaliyir deye bize bashqa bir usul lazimdir. Bu sebebden biz yeni
-* ArrayList yaradiriqki getter methodu istifade ederek valuelari oxuya bilek bundan elave olaraqda siralaya bilek
-* */
+        /*
+         * Evvel biz LinkedHashMap-de saxladigimiz butun ticketleri
+         * new ArrayList<>(tickets.values()) ile elave bir siyahiya yigirdiq.
+         *
+         * Sebebi o idi ki, biz adi for loop istifade edirdik
+         * ve allTickets.get(i) ile ticketleri indeks uzre gotururduk.
+         *
+         * Amma oyrenirik ki, filtering etmek ucun butun ticketleri
+         * ayrica ArrayList-e kocurmeye ehtiyac yoxdur.
+         *
+         * tickets.values() bize LinkedHashMap-deki butun Ticket
+         * obyektlerine birbasa baxmaq imkani verir.
+         *
+         * Enhanced for-loop (for-each) istifade ederek
+         * ticketleri indeks olmadan bir-bir yoxlaya bilerik.
+         *
+         * Belelikle lazimsiz allTickets ArrayList-ini silirik
+         * ve elave memory istifadesini azaldiriq.
+         */
         if(ticketStatus == null){
 
             throw new IllegalArgumentException("Status boş ola bilməz!");
 
         }
 
-        List<Ticket> allTickets = new ArrayList<>(tickets.values());
-
         List<Ticket> result = new ArrayList<>();
 
-        for (int i = 0; i < allTickets.size(); i++){
-
-            // Ashagida verilen kodda gore bilirik ki, Ticket deyishenin data type i ticket deyishenin adi
-            //allTickets.get(i) hemin indeksi elementi qaytarir
-
-            Ticket ticket = allTickets.get(i);
+        for (Ticket ticket : tickets.values()){
 
             if(ticket.getStatus() == ticketStatus){
                 result.add(ticket);
@@ -123,10 +130,7 @@ public class TicketService {
 
 
     // getHighPriorityTickets
-    // Burda da eyni qayda da oldugu kimi yeni array yaradib ozun uzerinde ishleyirk. Yeni parametr
-    // Olaraq result yazib neticeni resultla qeyd edirik
-
-
+    //Eyni qayda burada shamil edirlir enhanced for loopla duzelde bildik
     public List<Ticket> getTicketsByPriority(TicketPriority ticketPriority) {
 
         if (ticketPriority == null) {
@@ -135,11 +139,7 @@ public class TicketService {
 
         List<Ticket> result = new ArrayList<>();
 
-        List<Ticket> allTickets = new ArrayList<>(tickets.values());
-
-        for (int i = 0; i < allTickets.size(); i++) {
-
-            Ticket ticket = allTickets.get(i);
+        for (Ticket ticket : tickets.values()) {
 
             if (ticket.getPriority() == ticketPriority) {
                 result.add(ticket);
