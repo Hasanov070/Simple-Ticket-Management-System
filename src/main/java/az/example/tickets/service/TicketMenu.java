@@ -56,6 +56,7 @@ public class TicketMenu {
                     case "5" -> filterByPriority();
                     case "6" -> changeStatus();
                     case "7" -> deleteTicket();
+                    case "8" -> filterByCreatedTime();
                     case "0" -> {
 
                         System.out.println("Proqramdan çıxıldı!");
@@ -101,6 +102,7 @@ public class TicketMenu {
         System.out.println("5. Bileti priority-ə görə filter et");
         System.out.println("6. Biletin statusun dəyis");
         System.out.println("7. Bileti sil");
+        System.out.println("8. Biletləri zamana görə sırala");
         System.out.println("0. Əməliyyatı sonlandır");
         System.out.print("Seçim edin!: ");
     }
@@ -162,7 +164,13 @@ public class TicketMenu {
         Long id = readLong("Silinəcək İdentifikasıya nömrəsi: ");
         ticketService.deleteTicket(id);
         System.out.println("Bilet silindi. İdentifikasıya nömrəsi: " + id);
+
     }
+
+    private void filterByCreatedTime(){
+        printTickets(ticketService.getTicketsSortedByCreatedAt());
+    }
+
 
 
 

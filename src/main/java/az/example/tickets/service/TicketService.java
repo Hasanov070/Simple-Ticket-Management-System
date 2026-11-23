@@ -169,5 +169,24 @@ public class TicketService {
     }
 
 
+    /*Biz TicketServicesinde ki, classda biletleri map icherisinde saxlamishiq ona gorede, mapin ozunu bir basha
+    * list.sort() ile siralaya bilmirik. Ona gore ticket values ile butun ticklerin obyektlerini goturub array liste qoyuruq
+    * Indi biz bunu siralamaq istesek bele bizim ticketin fieldleri var biz onu demeliyik axi neye gore siralasin
+    * Burda da bizim komeyimize comparator chatir. Onun komeyi ile en tez yaradilan ticketden en sonuncu tickete kimi list edir
+    * Burada sorting bir nov bubble sorting kim ishleyir. Iki ticket goturur ve onlari vaxtlarina esasen boyuk ve yaxud kichik
+    * sheklinde muqayise edir.
+    *
+    */
+
+    public List<Ticket> getTicketsSortedByCreatedAt() {
+
+        List<Ticket> list = new ArrayList<>(tickets.values());
+
+        list.sort(Comparator.comparing(ticket -> ticket.getCreatedAt()));
+
+        return list;
+    }
+
+
 
 }
