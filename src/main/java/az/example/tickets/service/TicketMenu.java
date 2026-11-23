@@ -106,8 +106,7 @@ public class TicketMenu {
     }
 
 
-    // --------------------------------------------- HELPER METHODS ---------------------------------------------
-
+//------------------------------------------SERVICE-------------------------
 // Bu hisseden etibaren TicketService de yaratdigimiz valuelari chagiririq
     private void  createTicket(){
         Long id = readLong("İdentifikasiya nömrəsi: ");
