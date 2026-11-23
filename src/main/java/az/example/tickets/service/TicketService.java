@@ -37,6 +37,7 @@ public class TicketService {
             Long id,
             String title,
             String description,
+            TicketStatus ticketStatus,
             TicketPriority ticketPriority
     )
     {

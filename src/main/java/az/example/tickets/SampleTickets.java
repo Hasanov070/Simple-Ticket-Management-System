@@ -1,5 +1,6 @@
 package az.example.tickets;
 import az.example.tickets.enums.TicketPriority;
+import az.example.tickets.enums.TicketStatus;
 import az.example.tickets.service.TicketService;
 
 
@@ -15,6 +16,7 @@ public class SampleTickets {
                     1001L,
                     "Internet Problemi",
                     "İnternet işləmir",
+                    TicketStatus.IN_PROGRESS,
                     TicketPriority.HIGH
 
             );
@@ -23,6 +25,7 @@ public class SampleTickets {
                     1002L,
                     "Giriş Problemi",
                     "İstifadəçi hesabına daxil ola bilmir",
+                    TicketStatus.CLOSED,
                     TicketPriority.HIGH
 
             );
@@ -31,6 +34,7 @@ public class SampleTickets {
                     1003L,
                     "Printer Problemi",
                     "Printer çap etmir",
+                    TicketStatus.OPEN,
                     TicketPriority.HIGH
 
             );
@@ -39,6 +43,7 @@ public class SampleTickets {
                     1004L,
                     "Server Problemi",
                     "Server işləmir",
+                    TicketStatus.OPEN
                     TicketPriority.HIGH
 
             );
@@ -47,6 +52,7 @@ public class SampleTickets {
                     1005L,
                     "Proqram Təminatı Problemi",
                     "Proqram açılmır",
+                    TicketStatus.CLOSED,
                     TicketPriority.HIGH
 
             );
@@ -55,7 +61,10 @@ public class SampleTickets {
                     1006L,
                     "Şəbəkə Problemi",
                     "Şəbəkə bağlantısı yoxdur",
+                    TicketStatus.IN_PROGRESS,
                     TicketPriority.HIGH
+
+
 
             );
 
