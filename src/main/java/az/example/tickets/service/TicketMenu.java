@@ -5,7 +5,9 @@ import az.example.tickets.enums.TicketPriority;
 import az.example.tickets.enums.TicketStatus;
 import az.example.tickets.exception.DuplicateTicketException;
 import az.example.tickets.exception.TicketNotFoundException;
+import java.time.format.DateTimeFormatter;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -167,8 +169,34 @@ public class TicketMenu {
 
     }
 
-    private void filterByCreatedTime(){
-        printTickets(ticketService.getTicketsSortedByCreatedAt());
+    private void filterByCreatedTime() {
+
+
+        System.out.println("1. Ən birinci yaradılan");
+        System.out.println("2. Ən sonuncu yaradılan");
+
+
+        String choice = scanner.nextLine();
+
+        List<Ticket> list = ticketService.getTicketsSortedByCreatedAt();
+
+        if (choice.equals("1")) {
+
+            printTickets(list);
+
+        } else if (choice.equals("2")) {
+
+            Collections.reverse(list);
+
+            printTickets(list);
+
+        } else {
+
+            System.out.println("Yanlış seçim!");
+
+
+        }
+
     }
 
 
@@ -190,12 +218,13 @@ public class TicketMenu {
         }
         else {
             int i = 0;
-/*Eger siyahi bosh deilse, ichersiindeki butun ticketleri bir bir gostermek isteyirik
-* int i = 0, birinci ticketden bashlayir
-* tickets.size neche ticket oldugunu gosterir
-* tickets.get(i) siyahdindan hemin nomreli ticketi goturur*/
+    /*Eger siyahi bosh deilse, ichersiindeki butun ticketleri bir bir gostermek isteyirik
+    * int i = 0, birinci ticketden bashlayir
+    * tickets.size neche ticket oldugunu gosterir
+    * tickets.get(i) siyahdindan hemin nomreli ticketi goturur*/
             while (i < tickets.size()) {
                 System.out.println(tickets.get(i));
+
                 i++;
             }
         }

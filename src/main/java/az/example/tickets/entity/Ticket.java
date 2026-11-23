@@ -4,6 +4,7 @@ import az.example.tickets.enums.TicketPriority;
 import az.example.tickets.enums.TicketStatus;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public final class Ticket {
 
@@ -99,7 +100,8 @@ public final class Ticket {
                     + ", title = '" + title + '\''
                     + ", status = " + ticketStatus
                     + ", priority = " + ticketPriority
-                    + ", createdAt = " + createdAt
+                    + ", createdAt = " + createdAt.format(
+                                            DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))
                     + '}';
         }
 
