@@ -2,7 +2,7 @@ package az.example.tickets.exception;
 
 public class TicketNotFoundException extends RuntimeException {
     public TicketNotFoundException(Long id) {
-        super("Ticket with id " + id + " not found");
+        super(id + " İdentifikasiyalı nömrəli bilet tapılmadı");
     }
 }
 /*Burada bele bir sual yarana bilerki biz niye custom exceptionlar

@@ -45,7 +45,9 @@ public class TicketService {
          throw new DuplicateTicketException(id);
      }
 
-     Ticket ticket = new Ticket(id, title, description, ticketPriority);
+
+
+     Ticket ticket = new Ticket(id, title, description, ticketStatus,ticketPriority);
 // Ashagida qeyd olunan map.put(key, value) hansiki biz id ve ticketin valuesin birlikde qeyd edirikki ticketle
         //bagli olan ishleri rahat gore bilek LinkedHashMap da istifade olunan bir tooldu.
      tickets.put(id, ticket);
@@ -124,17 +126,22 @@ public class TicketService {
     // Burda da eyni qayda da oldugu kimi yeni array yaradib ozun uzerinde ishleyirk. Yeni parametr
     // Olaraq result yazib neticeni resultla qeyd edirik
 
-    public List<Ticket> getHighPriorityTickets(){
 
-        List<Ticket> allTickets = new ArrayList<>(tickets.values());
+    public List<Ticket> getTicketsByPriority(TicketPriority ticketPriority) {
+
+        if (ticketPriority == null) {
+            throw new IllegalArgumentException("Priority boş ola bilməz!");
+        }
 
         List<Ticket> result = new ArrayList<>();
 
-        for (int i = 0; i < allTickets.size(); i++){
+        List<Ticket> allTickets = new ArrayList<>(tickets.values());
+
+        for (int i = 0; i < allTickets.size(); i++) {
 
             Ticket ticket = allTickets.get(i);
 
-            if(ticket.getPriority() == TicketPriority.HIGH){
+            if (ticket.getPriority() == ticketPriority) {
                 result.add(ticket);
             }
         }
@@ -160,6 +167,7 @@ public class TicketService {
 
         tickets.remove(id);
     }
+
 
 
 }

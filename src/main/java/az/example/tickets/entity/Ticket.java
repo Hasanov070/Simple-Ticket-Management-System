@@ -29,12 +29,19 @@ public final class Ticket {
 // Constructor, men burda bele bir yanlishiq eledim ki constructor ichine bir method yazmishdim. Bunu etmek olmaz
     // Biz oyrenmishdikki constructor yeni obyekt yaradilarken onun ilkin melumatlarini teyin edir.
 
-    public Ticket(Long id, String title, String description, TicketPriority ticketPriority){
+    public Ticket(Long id, String title, String description, TicketStatus ticketStatus, TicketPriority ticketPriority){
         this.id = id; // istifadechi terefinden melumat verilir
         this.title = title; // istifadechi terefinden melumat verilir
         this.description = description; // istifadechi terefinden melumat verilir
         this.ticketPriority = ticketPriority; // istifadechi terefinden melumat verilir
-        this.ticketStatus = TicketStatus.OPEN; //Sistem terefinden ilkin melhelede (OPEN) kimi verilir sonradan deyishilecek
+
+        // Burda ise eger istifadechi value vermese onda TicketStatus OPEN OLARAQ QALACAQ
+        if (ticketStatus != null) {
+            this.ticketStatus = ticketStatus;
+        } else {
+            this.ticketStatus = TicketStatus.OPEN;
+        }
+
         this.createdAt = LocalDateTime.now();
 
 
@@ -64,7 +71,7 @@ public final class Ticket {
     public void changeTicketStatus(TicketStatus newStatus) {
         if (newStatus == null) {
             throw new IllegalArgumentException(
-                    "Ticket status cannot be null"
+                    "Biletin statusu boş ola bilməz!"
             );
         }
         this.ticketStatus = newStatus;

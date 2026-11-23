@@ -43,7 +43,7 @@ public class SampleTickets {
                     1004L,
                     "Server Problemi",
                     "Server işləmir",
-                    TicketStatus.OPEN
+                    TicketStatus.OPEN,
                     TicketPriority.HIGH
 
             );
