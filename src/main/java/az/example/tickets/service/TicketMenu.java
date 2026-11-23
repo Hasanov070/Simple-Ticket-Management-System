@@ -20,17 +20,14 @@ public class TicketMenu {
   ancaq fieldin bashqa obyektine yoneldirilmesini qadagan edir.
   * */
     private Scanner scanner;
+// Scanner - java hazir class in adidir
+// scanner - biz verdiyimiz fieldin adidir.
 
     /* Biz burda scanner obyekti yaratmiriq, sadece TicketMenu classina deyirk ki, istifadechilerin yazdiqlarini oxumaq
     uchun scanner fieldimiz olacaq.
-
-
-
     * */
 
 
-    //Constuructor: obyekt yaranarken lazim olan seyleri teyin edir
-    // TicketService-i kenardan aliriq, scanneri ise burada yaradiriq
 
 
     public TicketMenu(TicketService ticketService){
@@ -82,7 +79,7 @@ public class TicketMenu {
                 );
             }
             catch(NoSuchElementException error){
-                // Giris axini bitibse (meselen Ctrl+D) proqrami nezaketle bagla
+                // Giris axini bitibse (meselen Ctrl+D) proqrami sondur
                 System.out.println("Giriş bitdi. Proqram dayandırıldı.");
                 engine = false;
             }
@@ -177,7 +174,8 @@ public class TicketMenu {
 
     //--------------------------------------------- HELPER METHODS ---------------------------------------------
 
-
+/*TicketService classinin ichinde ticketService.getAllTicket(); methodumuz vardi. Amma bize lazimdirki, hemin siyahini
+* ekranda gosterek ona gore de biz printTickets metodunu yaratmishiq*/
     private void printTickets(List<Ticket> tickets) {
 
         if (tickets.isEmpty()) {
@@ -185,15 +183,21 @@ public class TicketMenu {
         }
         else {
             int i = 0;
-
+/*Eger siyahi bosh deilse, ichersiindeki butun ticketleri bir bir gostermek isteyirik
+* int i = 0, birinci ticketden bashlayir
+* tickets.size neche ticket oldugunu gosterir
+* tickets.get(i) siyahdindan hemin nomreli ticketi goturur*/
             while (i < tickets.size()) {
                 System.out.println(tickets.get(i));
                 i++;
             }
         }
     }
-
+// Esas meqsedimiz userden duzgun bir cavab almaqdir.
     private Long readLong(String message) {
+
+        // Sual yarana bilerki, neye while true yazmisiq, chunki ilkin etapda biz ID teleb edirik, her shey ID ile bashlayir
+        // bu sebebden istifadechiden duzgun reqem alana kimi etmeliyik
         while (true) {
             System.out.print(message);
             String input = scanner.nextLine().trim();
