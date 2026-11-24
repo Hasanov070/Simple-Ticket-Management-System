@@ -56,13 +56,14 @@ public class TicketMenu {
                     case "6" -> changeStatus();
                     case "7" -> deleteTicket();
                     case "8" -> sortByCreatedTime();
+                    case "9" -> updateTicket();
                     case "0" -> {
 
                         System.out.println("Proqramdan çıxıldı!");
                         engine = false;
                     }
                     // Eger istifadechi ferqli bir value yazarsa o zaman default ishleyecek
-                    default -> System.out.println("Yanlış seçim! 0-8 arasi rəqəm daxil edin!");
+                    default -> System.out.println("Yanlış seçim! 0-9 arasi rəqəm daxil edin!");
 
                 }
             }
@@ -97,6 +98,7 @@ public class TicketMenu {
         System.out.println("6. Biletin statusun dəyis");
         System.out.println("7. Bileti sil");
         System.out.println("8. Biletləri zamana görə sırala");
+        System.out.println("9. Biletlərin başlığın, açıqlamasın, vacibliyini dəyişdir");
         System.out.println("0. Əməliyyatı sonlandır");
         System.out.print("Seçim edin!: ");
     }
@@ -192,6 +194,34 @@ public class TicketMenu {
 
         }
 
+    }
+
+/*Burada Updating ticket yaratdim, hansiki istifadechi istese biletin biletin bashligin, achiqlamasin ve prioitisin deyishe biler
+* bununla birlikde elchatandir.*/
+
+    private  void  updateTicket(){
+        Long id = readLong("Yenilənəcək biletin İdentifikasiya nömrəsi: ");
+
+        Ticket ticket = ticketService.getTicketById(id);
+
+        System.out.println("Hazırki bilet: " + ticket);
+
+        System.out.print("Yeni başlıq ");
+        String newTitle = scanner.nextLine().trim();
+
+        System.out.print("Yeni açıqlama ");
+        String newDescription = scanner.nextLine().trim();
+
+        TicketPriority newTicketPriority = readPriority();
+
+        ticketService.updateTicket(
+                id,
+                newTitle,
+                newDescription,
+                newTicketPriority
+        );
+
+        System.out.println("Bilet yeniləndi: " + ticket);
     }
 
 

@@ -69,7 +69,7 @@ public final class Ticket {
 
     // Yuxarida behs olunan hemin method, indi tam duzgun yerindedir.
     // Bu methodun esas ishi yaranmish ticketin statusunu deyishdirmekdir.
-    public void changeTicketStatus(TicketStatus newStatus) {
+   public void changeTicketStatus(TicketStatus newStatus) {
         if (newStatus == null) {
             throw new IllegalArgumentException(
                     "Biletin statusu boş ola bilməz!"
@@ -77,6 +77,32 @@ public final class Ticket {
         }
         this.ticketStatus = newStatus;
     }
+
+
+    public void updateTicket(
+            String newTitle,
+            String newDescription,
+            TicketPriority newTicketPriority)
+    {
+
+        if (newTitle == null || newTitle.isBlank()){
+            throw new IllegalArgumentException("Biletin başlığı boş ola bilməz!");
+        }
+
+        {
+            if(newTicketPriority == null){
+                throw  new IllegalArgumentException("Priority boş ola bilməz!");
+            }
+
+            this.title = newTitle;
+            this.description = newDescription;
+            this.ticketPriority = newTicketPriority;
+        }
+    }
+
+
+
+
 
 
 
