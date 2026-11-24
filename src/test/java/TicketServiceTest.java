@@ -4,10 +4,11 @@ import az.example.tickets.entity.Ticket;
 import az.example.tickets.enums.TicketStatus;
 import az.example.tickets.enums.TicketPriority;
 
+import az.example.tickets.exception.DuplicateTicketException;
+import az.example.tickets.exception.TicketNotFoundException;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 /*Burada ilk defe Junit test yazaraq yazdigimiz metodlari funksiyanliqlari yoxlayaraq oyrenmeye chalishacam. Ilkin etapda biz @Test istifade ediriik
 * Bu o demekdirki, @Test JUnite deyir ki, bu method adi method deil, yoxlanilmali olan test methodudur. JUnit de ozu bu methodu tapib ishe salir.Bize main.javani run
@@ -112,8 +113,57 @@ public class TicketServiceTest {
 
         assertTrue(ticketService.getAllTickets().isEmpty());
 
-        /*Bu hissede esas anlayishimiz bundan ibaretdir ki, biz assertTrue bize iki valuenin qiymtleri eynidirse bize True value qaytaracaq bununla birlikde biz hemin
+        /*Bu hissede esas anlayishimiz bundan ibaretdir ki, biz assertTrue bize iki valuenin qiymetleri eynidirse bize True value qaytaracaq bununla birlikde biz hemin
         * cavabin real olub olmadigin gore bilirik.*/
+    }
+/* Burdada biz esas exceptionlari test edeceyik. Sadece olaraq esas ferq burada assertThrows methpdundan istifade ederek
+* meqsedimiz, yazdigimiz kodun gozlediyimiz exceptioni atib atmadigini gormekdir. Burdada expetionThrows komek edir
+* assertThrows(expectedException, executable); bununla birlikde biz gore bilirik.
+*
+* TicketNotFoundException.class bes bu nedir buda o demekdirki assertThrows gozleyirki TicketNotFoundException bele bir exception gelecek
+* Eger gelse demeli testi pass eliiyr gelmees demeli elemir.
+* */
+
+    @Test
+    void TicketNotFoundTest(){
+        TicketService ticketService = new TicketService();
+        Ticket ticket = ticketService.createTicket(
+                1001L,
+                "İnternet işləmir",
+                "Router da problem var",
+                TicketStatus.OPEN,
+                TicketPriority.HIGH
+
+        );
+
+        assertThrows(
+                TicketNotFoundException.class, () -> ticketService.getTicketById(99999L)
+        );
+    }
+
+    @Test
+    void DuplicateTicketTest(){
+        TicketService ticketService = new TicketService();
+
+        ticketService.createTicket(
+                1001L,
+                "İnternet işləmir",
+                "Router da problem var",
+                TicketStatus.OPEN,
+                TicketPriority.HIGH
+        );
+
+        assertThrows(
+                DuplicateTicketException.class, () -> ticketService.createTicket(
+
+                        1001L,
+                        "İnternet işləmir",
+                        "Router da problem var",
+                        TicketStatus.OPEN,
+                        TicketPriority.HIGH
+                )
+        );
+
     }
 
 }
