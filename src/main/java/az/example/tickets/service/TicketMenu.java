@@ -5,7 +5,6 @@ import az.example.tickets.enums.TicketPriority;
 import az.example.tickets.enums.TicketStatus;
 import az.example.tickets.exception.DuplicateTicketException;
 import az.example.tickets.exception.TicketNotFoundException;
-import java.time.format.DateTimeFormatter;
 
 import java.util.Collections;
 import java.util.List;
@@ -14,7 +13,7 @@ import java.util.Scanner;
 
 public class TicketMenu {
 
-    private  final TicketService ticketService;
+    private final TicketService ticketService;
     /* TicketServicesin daxilinde metodlarimiz var, hansiki ticketlerle bagli esas emeliyyatlari yerine yetirir.
   ticketService ise TicketService obyektine muraciet etmek uhcun istifade etdidyimiz fielddir.
   Neye gore final istifade eledik, bu field bir defe hansi ticketeService obyektine baglanibsa sonradan bashqa
@@ -30,19 +29,17 @@ public class TicketMenu {
     * */
 
 
-
-
-    public TicketMenu(TicketService ticketService){
+    public TicketMenu(TicketService ticketService) {
         this.ticketService = ticketService;
         this.scanner = new Scanner(System.in);
     }
 
 
-    public void startMenu(){
+    public void startMenu() {
         boolean engine = true;
         // burda biz boolean valuesinden istifade edirk ki, program false olana kimi while ile ishlesin
 
-        while (engine){
+        while (engine) {
             printMenu();
             try {
                 /*Istifadechinin sechimlerini oxuyur, trim ise istifadechinin yazanda yazdigi melumatin yanindaki
@@ -58,30 +55,27 @@ public class TicketMenu {
                     case "5" -> filterByPriority();
                     case "6" -> changeStatus();
                     case "7" -> deleteTicket();
-                    case "8" -> filterByCreatedTime();
+                    case "8" -> sortByCreatedTime();
                     case "0" -> {
 
                         System.out.println("Proqramdan çıxıldı!");
                         engine = false;
                     }
                     // Eger istifadechi ferqli bir value yazarsa o zaman default ishleyecek
-                    default -> System.out.println("Yanlış seçim! 0-7 arasi rəqəm daxil edin!");
+                    default -> System.out.println("Yanlış seçim! 0-8 arasi rəqəm daxil edin!");
 
                 }
             }
             // Burada error xetanin obyetktini saxlayan valuedi
             catch (TicketNotFoundException error) {
-                    System.out.println("XƏTA: " + error.getMessage());
-            }
-            catch(DuplicateTicketException error){
                 System.out.println("XƏTA: " + error.getMessage());
-            }
-            catch (IllegalArgumentException error){
+            } catch (DuplicateTicketException error) {
+                System.out.println("XƏTA: " + error.getMessage());
+            } catch (IllegalArgumentException error) {
                 System.out.println(
                         "DÜZGUN OLMAYAN MƏLUMAT: " + error.getMessage()
                 );
-            }
-            catch(NoSuchElementException error){
+            } catch (NoSuchElementException error) {
                 // Giris axini bitibse (meselen Ctrl+D) proqrami sondur
                 System.out.println("Giriş bitdi. Proqram dayandırıldı.");
                 engine = false;
@@ -90,11 +84,9 @@ public class TicketMenu {
     }
 
 
-
-
-//--------------------------------MENU-------------------------------------------------
+    //--------------------------------MENU-------------------------------------------------
     // Consoleda menuynun soutlari
-    private  void printMenu() {
+    private void printMenu() {
         System.out.println();
         System.out.println("===== Bilet Sistem Menyusu =====");
         System.out.println("1. Bilet yarat");
@@ -110,9 +102,9 @@ public class TicketMenu {
     }
 
 
-//------------------------------------------SERVICE-------------------------
+    //------------------------------------------SERVICE-------------------------
 // Bu hisseden etibaren TicketService de yaratdigimiz valuelari chagiririq
-    private void  createTicket(){
+    private void createTicket() {
         Long id = readLong("İdentifikasiya nömrəsi: ");
 
         System.out.print("Başlıq: ");
@@ -128,31 +120,34 @@ public class TicketMenu {
         System.out.println("Bilet yaradıldı: " + ticket);
     }
 
-// Butun biletleri gosterir
+    // Butun biletleri gosterir
     private void showAllTickets() {
         printTickets(ticketService.getAllTickets());
     }
-// Biletleri IDsine gore tapir
-    private  void  findTicketById(){
+
+    // Biletleri IDsine gore tapir
+    private void findTicketById() {
         Long id = readLong("Axtarılan İdentifikasıya nömrəsi: ");
         System.out.println(ticketService.getTicketById(id));
     }
-// Statusa gore filterleyir
-    private void filterByStatus(){
+
+    // Statusa gore filterleyir
+    private void filterByStatus() {
         TicketStatus ticketStatus = readStatus();
         printTickets(ticketService.getTicketByStatus(ticketStatus));
     }
-// Prioritiye gore filterleyir
+
+    // Prioritiye gore filterleyir
     private void filterByPriority() {
         TicketPriority priority = readPriority();
         printTickets(ticketService.getTicketsByPriority(priority));
     }
-// Biletin statusunu deyishdiryir
-    private  void  changeStatus(){
+
+    // Biletin statusunu deyishdiryir
+    private void changeStatus() {
         Long id = readLong("Statusu dəyişiləcək biletin İdentifikasıya nömrəsi: ");
         Ticket ticket = ticketService.getTicketById(id);
         System.out.println("Hazırkı status: " + ticket.getStatus());
-
 
 
         TicketStatus newStatus = readStatus();
@@ -169,7 +164,7 @@ public class TicketMenu {
 
     }
 
-    private void filterByCreatedTime() {
+    private void sortByCreatedTime() {
 
 
         System.out.println("1. Ən birinci yaradılan");
@@ -192,7 +187,7 @@ public class TicketMenu {
 
         } else {
 
-            System.out.println("Yanlış seçim!");
+            System.out.println("Yanlış seçim! 1 və yaxud 2 arasi rəqəm daxil edin!");
 
 
         }
@@ -200,28 +195,20 @@ public class TicketMenu {
     }
 
 
-
-
-
-
-
-
-
     //--------------------------------------------- HELPER METHODS ---------------------------------------------
 
-/*TicketService classinin ichinde ticketService.getAllTicket(); methodumuz vardi. Amma bize lazimdirki, hemin siyahini
-* ekranda gosterek ona gore de biz printTickets metodunu yaratmishiq*/
+    /*TicketService classinin ichinde ticketService.getAllTicket(); methodumuz vardi. Amma bize lazimdirki, hemin siyahini
+     * ekranda gosterek ona gore de biz printTickets metodunu yaratmishiq*/
     private void printTickets(List<Ticket> tickets) {
 
         if (tickets.isEmpty()) {
             System.out.println("Bilet tapılmadı.");
-        }
-        else {
+        } else {
             int i = 0;
-    /*Eger siyahi bosh deilse, ichersiindeki butun ticketleri bir bir gostermek isteyirik
-    * int i = 0, birinci ticketden bashlayir
-    * tickets.size neche ticket oldugunu gosterir
-    * tickets.get(i) siyahdindan hemin nomreli ticketi goturur*/
+            /*Eger siyahi bosh deilse, ichersiindeki butun ticketleri bir bir gostermek isteyirik
+             * int i = 0, birinci ticketden bashlayir
+             * tickets.size neche ticket oldugunu gosterir
+             * tickets.get(i) siyahdindan hemin nomreli ticketi goturur*/
             while (i < tickets.size()) {
                 System.out.println(tickets.get(i));
 
@@ -229,7 +216,8 @@ public class TicketMenu {
             }
         }
     }
-// Esas meqsedimiz userden duzgun bir cavab almaqdir.
+
+    // Esas meqsedimiz userden duzgun bir cavab almaqdir.
     private Long readLong(String message) {
 
         // Sual yarana bilerki, neye while true yazmisiq, chunki ilkin etapda biz ID teleb edirik, her shey ID ile bashlayir
@@ -240,8 +228,8 @@ public class TicketMenu {
             try {
                 return Long.parseLong(input); // String formatinda yazilmish ededi long tipine chevirmekdir.
 
-            }
-            catch (NumberFormatException error) { // adindan da belli oldugu kimi yanliz eded formatina chevrilmesi uchun xetadi
+            } catch (
+                    NumberFormatException error) { // adindan da belli oldugu kimi yanliz eded formatina chevrilmesi uchun xetadi
                 System.out.println("Zəhmət olmasa yalnız rəqəm daxil edin!");
             }
         }
@@ -260,14 +248,11 @@ public class TicketMenu {
 
             if (statusChoice.equals("1")) {
                 return TicketStatus.OPEN;
-            }
-            else if (statusChoice.equals("2")) {
+            } else if (statusChoice.equals("2")) {
                 return TicketStatus.IN_PROGRESS;
-            }
-            else if (statusChoice.equals("3")) {
+            } else if (statusChoice.equals("3")) {
                 return TicketStatus.CLOSED;
-            }
-            else {
+            } else {
                 System.out.println("Yanlış seçim! Yenidən cəhd edin. 1 və 3 arası verilmiş statuslardan seçin");
             }
         }
@@ -285,31 +270,14 @@ public class TicketMenu {
 
             if (priorityChoice.equals("1")) {
                 return TicketPriority.LOW;
-            }
-            else if (priorityChoice.equals("2")) {
+            } else if (priorityChoice.equals("2")) {
                 return TicketPriority.MEDIUM;
-            }
-            else if (priorityChoice.equals("3")) {
+            } else if (priorityChoice.equals("3")) {
                 return TicketPriority.HIGH;
-            }
-            else {
+            } else {
                 System.out.println("Yanlış seçim! Yenidən cəhd edin. 1 və 3 arası verilmiş statuslardan seçin");
             }
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

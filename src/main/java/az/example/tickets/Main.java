@@ -1,13 +1,9 @@
 package az.example.tickets;
 
-import az.example.tickets.entity.Ticket;
-import az.example.tickets.enums.TicketPriority;
-import az.example.tickets.enums.TicketStatus;
+
 import az.example.tickets.service.TicketMenu;
 import az.example.tickets.service.TicketService;
 
-import java.util.List;
-import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
