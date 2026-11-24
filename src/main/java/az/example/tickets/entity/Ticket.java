@@ -124,6 +124,7 @@ public final class Ticket {
                 public String toString(){
             return "Ticket{id = " + id
                     + ", title = '" + title + '\''
+                    + ", description = " + description
                     + ", status = " + ticketStatus
                     + ", priority = " + ticketPriority
                     + ", createdAt = " + createdAt.format(
