@@ -8,6 +8,8 @@ import az.example.tickets.exception.DuplicateTicketException;
 import az.example.tickets.exception.TicketNotFoundException;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /*Burada ilk defe Junit test yazaraq yazdigimiz metodlari funksiyanliqlari yoxlayaraq oyrenmeye chalishacam. Ilkin etapda biz @Test istifade ediriik
@@ -15,8 +17,8 @@ import static org.junit.jupiter.api.Assertions.*;
 * etdirmeye gerek duymur.*/
 public class TicketServiceTest {
 
-    /*Burada sade bir shekilde biz methodumuzu chaririq meselen burada ilkin etapda men biletin yaranib yaranmadigini yoxlayiram. Istifadechi bilet yaradan zaman
-    * ID, title, description, status, ve priority sechir burdada eyni qayda da edirik.*/
+    /*Burada sade bir shekilde biz methodumuzu chaririq meselen burada ilkin etapda men biletin yaranib yaranmadigini yoxlayiram. // Istifadechi ID, title, description ve priority daxil edir.
+// TicketService ilkin statusu avtomatik OPEN olaraq teyin edir. burdada eyni qayda da edirik.*/
     @Test
     void createTicketTest(){
 
@@ -26,7 +28,6 @@ public class TicketServiceTest {
                 1001L,
                 "İnternet işləmir",
                 "Router da problem var",
-                TicketStatus.OPEN,
                 TicketPriority.HIGH
         );
 
@@ -41,7 +42,7 @@ public class TicketServiceTest {
         assertEquals(1001L, ticket.getId());
 
 
-        /*Bu hissede ise assertEquals methodundan istifade ederek iki cavabinda eyni olub olmadigin yoxlayiriq. Meselen men burda sadece title larida yoxlaya bilerdim,
+        /*Bu hissede ise assertEquals methodundan istifade ederek İki dəyərin bərabərliyini yoxlayır. Meselen men burda sadece title larida yoxlaya bilerdim,
         * amma istedim ki diger fieldleri yoxlayib gorek her biri duzgun shekilde yaradacaqdirmi*/
 
     }
@@ -54,7 +55,6 @@ public class TicketServiceTest {
                 1001L,
                 "Wi-Fi Problem",
                 "Router problem",
-                TicketStatus.OPEN,
                 TicketPriority.HIGH
         );
 
@@ -74,7 +74,6 @@ public class TicketServiceTest {
                 1001L,
                 "Wi-Fi Problem",
                 "Router problem",
-                TicketStatus.OPEN,
                 TicketPriority.HIGH
         );
 
@@ -105,7 +104,6 @@ public class TicketServiceTest {
                 1001L,
                 "İnternet işləmir",
                 "Router da problem var",
-                TicketStatus.OPEN,
                 TicketPriority.HIGH
         );
 
@@ -131,7 +129,6 @@ public class TicketServiceTest {
                 1001L,
                 "İnternet işləmir",
                 "Router da problem var",
-                TicketStatus.OPEN,
                 TicketPriority.HIGH
 
         );
@@ -149,7 +146,6 @@ public class TicketServiceTest {
                 1001L,
                 "İnternet işləmir",
                 "Router da problem var",
-                TicketStatus.OPEN,
                 TicketPriority.HIGH
         );
 
@@ -159,11 +155,56 @@ public class TicketServiceTest {
                         1001L,
                         "İnternet işləmir",
                         "Router da problem var",
-                        TicketStatus.OPEN,
                         TicketPriority.HIGH
                 )
         );
 
     }
+
+    @Test
+    void getTicketByStatusTest(){
+        TicketService ticketService = new TicketService();
+        ticketService.createTicket(
+                1001L,
+                "Internet Problem",
+                "Router problem",
+                TicketPriority.HIGH
+        );
+
+        ticketService.createTicket(
+                1002L,
+                "Computer Problem",
+                "Computer is slow",
+                TicketPriority.LOW
+        );
+
+        ticketService.createTicket(
+                1003L,
+                "Printer Problem",
+                "Printer is not working",
+                TicketPriority.HIGH
+        );
+
+        ticketService.changeTicketStatus(
+                1002L,
+                TicketStatus.CLOSED
+        );
+
+
+        // Act
+        List<Ticket> result = ticketService.getTicketByStatus(
+                TicketStatus.OPEN
+        );
+
+        // Assert
+        assertEquals(2, result.size());
+
+        for (Ticket ticket : result) {
+            assertEquals(TicketStatus.OPEN, ticket.getStatus());
+        }
+    }
+
+
+
 
 }

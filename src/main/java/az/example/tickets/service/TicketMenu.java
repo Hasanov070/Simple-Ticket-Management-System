@@ -117,8 +117,8 @@ public class TicketMenu {
 
         TicketPriority priority = readPriority();
 
-        // Yeni ticket her zaman OPEN statusu ile baslayir (Ticket constructor-i bele edir)
-        Ticket ticket = ticketService.createTicket(id, title, description, TicketStatus.OPEN, priority);
+        // Yeni ticket-in ilkin statusu TicketService daxilinde OPEN olaraq teyin edilir.
+        Ticket ticket = ticketService.createTicket(id, title, description, priority);
         System.out.println("Bilet yaradıldı: " + ticket);
     }
 

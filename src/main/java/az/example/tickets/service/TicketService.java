@@ -37,7 +37,6 @@ public class TicketService {
             Long id,
             String title,
             String description,
-            TicketStatus ticketStatus,
             TicketPriority ticketPriority
     )
     {
@@ -47,7 +46,12 @@ public class TicketService {
 
 
 
-     Ticket ticket = new Ticket(id, title, description, ticketStatus,ticketPriority);
+     Ticket ticket = new Ticket(
+             id,
+             title,
+             description,
+             TicketStatus.OPEN,
+             ticketPriority);
 // Ashagida qeyd olunan map.put(key, value) hansiki biz id ve ticketin valuesin birlikde qeyd edirikki ticketle
         //bagli olan ishleri rahat gore bilek LinkedHashMap da istifade olunan bir tooldu.
      tickets.put(id, ticket);
