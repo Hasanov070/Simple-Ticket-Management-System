@@ -189,7 +189,9 @@ public class TicketServiceTest {
                 1002L,
                 TicketStatus.CLOSED
         );
-
+/*Burada bizim esas meqsedimiz changeByTicket statusunu bir basha method kimi chagirib ne etdiyini test elemekdi.
+* Burdada ona gore biz bir basha methodda cavab ne gelirse bizde (result) gelir onu istifade edirik. Bizim yaratdigimiz
+* ticketlerden ikisi OPENdirse. O zaman result olaraq bize 2 qaytarmlidi*/
 
         // Act
         List<Ticket> result = ticketService.getTicketByStatus(
@@ -198,7 +200,8 @@ public class TicketServiceTest {
 
         // Assert
         assertEquals(2, result.size());
-
+/*Sual yarana bilerki bes biz niye for loop istifade edirik. Chunki for loop her defesinde her bir ticketi ayri ayri
+* yoxlayaraq OPEN statusunda oldugun yoxlayir.*/
         for (Ticket ticket : result) {
             assertEquals(TicketStatus.OPEN, ticket.getStatus());
         }
